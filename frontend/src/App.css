@@ -7,7 +7,7 @@
   box-sizing: border-box;
 }
 
-body{
+body, html {
   font-family:  "system-ui";
     overflow-x: hidden;
 }

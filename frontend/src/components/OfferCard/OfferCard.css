@@ -36,7 +36,7 @@
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
-    height:51%;
+    height: 225px !important;
 }
 
  .get-offer-btn{
@@ -114,24 +114,25 @@
     color: #63687A;
     margin-bottom: 5px;
 }
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
     .OfferCards-Container{
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr) !important;
     }
     
 }
-@media (max-width:600px) {
+@media (max-width:900px) {
     .OfferCards-Container{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
     }
     
 }
-@media (max-width:400px) {
+@media (max-width:650px) {
     .OfferCards-Container{
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(1, 1fr) !important;
     }
     
 }
+
 .card-people{
     display: flex; 
     justify-content: space-between;

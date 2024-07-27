@@ -1,16 +1,17 @@
-import React from 'react'
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const QnA = () => {
+  const { t } = useTranslation();
+
   return (
-
     <section className="faq">
-    <h2>How can I book my Egyptian Experience?</h2>
-    <p>To book your experience, please fill out the form below or contact us for more details.</p>
-    <h2>Payment & Refund policy</h2>
-    <p>We offer various payment options and a flexible refund policy to accommodate your needs.</p>
-  </section>
+      <h2>{t('howToBook')}</h2>
+      <p>{t('bookingInstructions')}</p>
+      <h2>{t('paymentPolicy')}</h2>
+      <p>{t('paymentDetails')}</p>
+    </section>
+  );
+};
 
-  )
-}
-
-export default QnA
+export default QnA;

@@ -20,8 +20,8 @@ const Home = () => {
       <Overview />
       <Carousel images={images} />
       <OfferSection
-        apiEndpoint="http://localhost:5000/products"
-        wishlistEndpoint="http://localhost:5000/addToWishlist"
+        apiEndpoint="https://slsvacation.com/api/products"
+        wishlistEndpoint="https://slsvacation.com/api/addToWishlist"
       />
       <DropdownQnA />
       <Footer />

@@ -1,10 +1,13 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next';
 
 const OurTripsHeader = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="Offer-Header">
     <h3>
-      OUR TRIPS
+      {t('overviewtripsheader')}
     </h3>
     <div className='line'></div>
     </div>  

@@ -1,12 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import './Dropdown.css';
+import { useTranslation } from 'react-i18next';
 
 const Dropdown = ({ title, content }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const contentRef = useRef(null);
-  const [contentHeight, setContentHeight] = useState(0);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const contentRef = React.useRef(null);
+  const [contentHeight, setContentHeight] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight);
     }
@@ -16,7 +17,7 @@ const Dropdown = ({ title, content }) => {
     <div className={`dropdown ${isOpen ? 'active' : ''}`}>
       <div className="dropdown-header" onClick={() => setIsOpen(!isOpen)}>
         <span>{title}</span>
-        <i className="fa-solid fa-chevron-down arrow"></i>
+        <i className={`fa-solid fa-chevron-${isOpen ? 'up' : 'down'} arrow`}></i>
       </div>
       <div 
         className="dropdown-content" 
@@ -29,25 +30,28 @@ const Dropdown = ({ title, content }) => {
     </div>
   );
 };
+
 const DropdownQnA = () => {
+  const { t } = useTranslation();
+
   const bookingSteps = (
     <>
-      <p><span className='DropdownQnA-step'>Step 1:</span> Click on the button below and fill in the form with your preferences.</p>
-      <p>Step 2: Lay back while one of our agents cooks up the perfect experience for you, contacts you with all the details you need and answer all your questions.</p>
-      <p>Step 3: Confirm and pay to book your spot.</p>
-      <p>Step 4: Pack your bags and get ready to experience the beauty of Egypt.</p>
+      <p><span className='DropdownQnA-step'>{t('booking.step1')}</span> {t('booking.step1Content')}</p>
+      <p>{t('booking.step2')}</p>
+      <p>{t('booking.step3')}</p>
+      <p>{t('booking.step4')}</p>
     </>
   );
 
   return (
     <div className='Container2 Container DropdownQnA'>
       <Dropdown 
-        title="How can I book my Egyptian Experience?" 
+        title={t('faq.bookingTitle')} 
         content={bookingSteps} 
       />
       <Dropdown 
-        title="Payment & Refund policy" 
-        content={bookingSteps} 
+        title={t('faq.paymentTitle')} 
+        content={t('payment.policy')} 
       />
     </div>
   );

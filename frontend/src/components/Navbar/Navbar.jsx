@@ -3,8 +3,10 @@ import Logo from '../Logo/Logo';
 import Cart from '../Cart/Cart';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -17,16 +19,16 @@ const Navbar = () => {
         <Logo />
         <div className={`links ${isMenuOpen ? 'active' : ''}`}>
           <Link to="/Products">
-            <a href="#">Our Offers</a>
+            {t('ourOffers')}
           </Link>
           <Link to="/TripBookingPage">
-            <a href="#">Personalize your trip</a>
+            {t('personalizeYourTrip')}
           </Link>
           <Link to="/ContactPage">
-            <a href="#">Request a call</a>
+            {t('requestACall')}
           </Link>
           <Link to="/wishlist">
-            <a href="#">Wishlist</a>
+            {t('wishlist')}
           </Link>
         </div>
         <Cart />

@@ -1,7 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import './ExperienceCard.css';
 
 const ExperienceCard = () => {
+  const [offer, setOffer] = useState(null);
+  const { productId: offerId } = useParams();
+
+  useEffect(() => {
+    const fetchOffer = async () => {
+      try {
+        const response = await fetch(`https://slsvacation.com/api/getProduct/${offerId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch offer');
+        }
+        const data = await response.json();
+        setOffer(data[0]);
+      } catch (error) {
+        console.error('Error fetching offer:', error);
+      }
+    };
+
+    fetchOffer();
+  }, [offerId]);
+
+  if (!offer) {
+    return <div>Loading...</div>;
+  }
+
+  const splitIncludes = offer.includes.split('-').map((item, index) => item.trim()).filter(item => item.length > 0);
+
   return (
     <div className="experience-card">
       <h3>Experience</h3>
@@ -9,32 +36,23 @@ const ExperienceCard = () => {
       <section className="highlights">
         <p className='experience-card-p'>Highlights</p>
         <ul>
-          <li>Marvel at California's giant redwoods, the tallest trees in the world</li>
-          <li>Enjoy free time in Sausalito to shop, sightsee, or take photographs of the amazing views</li>
-          <li>Step out of the vehicle and walk around in walk around these amazing areas</li>
+          {offer.highlights}
         </ul>
       </section>
       
       <section className="full-description">
-        <p className='experience-card-p'>description</p>
-      <div className=''>
-      <p>
-          Explore the ancient groves of coastal redwoods in Muir Woods National Monument
-          alongside an expert guide on a half-day tour. Then discover the charming streets of
-          Downtown Sausalito on a relaxed half-day tour.
-          After a pick-up from a central San Francisco hotel, head north over the bridge 
-        </p>
-      </div>
+        <p className='experience-card-p'>Description</p>
+        <div className=''>
+          <p>{offer.description}</p>
+        </div>
       </section>
       
       <section className="includes">
         <p className='experience-card-p'>Includes</p>
         <ul>
-          <li className="included">Round-trip transport from San Francisco to Muir Woods and Sausalito by coach</li>
-          <li className="included">Professional, knowledgeable tour guide</li>
-          <li className="included">Muir Woods entrance fees</li>
-          <li className="not-included">Food and drinks</li>
-          <li className="not-included">Tips</li>
+          {splitIncludes.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
         </ul>
       </section>
     </div>

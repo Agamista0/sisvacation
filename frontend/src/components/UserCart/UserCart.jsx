@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 const CartItem = ({ item, onQuantityChange, onDelete }) => (
   <div className="cart-item">
-    <img src={require(`../media/offers/${item.product_img}`)} alt={item.title} className="item-image" />
+    <img src={require(`../media/${item.product_img}`)} alt={item.title} className="item-image" />
     <div className="item-details">
       <h3>{item.title}</h3>
       <p>{item.description}</p>
@@ -34,7 +34,7 @@ const UserCart = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getProductsCart', { withCredentials: true });
+        const response = await axios.get('https://slsvacation.com/api/getProductsCart', { withCredentials: true });
         setCartItems(response.data);
       } catch (error) {
         console.error('Error fetching cart items:', error);
@@ -46,7 +46,7 @@ const UserCart = () => {
 
   const handleQuantityChange = async (productId, newQuantity) => {
     try {
-      await axios.post('http://localhost:5000/updateCartItem', { productId, quantity: newQuantity }, { withCredentials: true });
+      await axios.post('https://slsvacation.com/api/updateCartItem', { productId, quantity: newQuantity }, { withCredentials: true });
       setCartItems(cartItems.map(item =>
         item.product_id === productId ? { ...item, quantity: newQuantity } : item
       ));
@@ -57,7 +57,7 @@ const UserCart = () => {
 
   const handleDelete = async (productId) => {
     try {
-      await axios.delete(`http://localhost:5000/deleteCartItem/${productId}`, {
+      await axios.delete(`https://slsvacation.com/api/deleteCartItem/${productId}`, {
         withCredentials: true
       });
       setCartItems(cartItems.filter(item => item.product_id !== productId));
@@ -85,7 +85,7 @@ const UserCart = () => {
           <PayPalButtons
             style={{ layout: "vertical" }}
             createOrder={(data, actions) => {
-              return fetch('http://localhost:5000/api/orders', {
+              return fetch('https://slsvacation.com/api/api/orders', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const UserCart = () => {
               .then(order => order.id);
             }}
             onApprove={(data, actions) => {
-              return fetch(`http://localhost:5000/api/orders/${data.orderID}/capture`, {
+              return fetch(`https://slsvacation.com/api/orders/${data.orderID}/capture`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import './ContactUs.css';
 
 const ContactUs = () => {
+  const { t, i18n } = useTranslation();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -16,10 +18,9 @@ const ContactUs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/submitCall', formData);
+      const response = await axios.post('https://slsvacation.com/api/submitCall', formData);
       console.log('Form submitted successfully:', response.data);
-      toast.success('Form submitted successfully!');
-      // Optionally, you can reset form fields after successful submission
+      toast.success(t('successMessage'));
       setFormData({
         firstName: '',
         lastName: '',
@@ -30,7 +31,7 @@ const ContactUs = () => {
       });
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Error submitting form. Please try again later.');
+      toast.error(t('errorMessage'));
     }
   };
 
@@ -40,7 +41,7 @@ const ContactUs = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="schedule-call-form ">
+    <form onSubmit={handleSubmit} className="schedule-call-form">
       <div className="FormHeader-Container">
         <FormHeader />
       </div>
@@ -53,54 +54,57 @@ const ContactUs = () => {
   );
 };
 
-const FormHeader = () => (
-  <div >
-    <p className='form-header'>SCHEDULE A CALL</p>
-    <p className='Traveler'>Hey Traveler,</p>
-    <p>
-      I'm Hanya, your assigned Travel Agent. Once we get on
-      this discovery call, I'll walk you through our destinations
-      & answer all your enquires about your upcoming
-      travels!
-    </p>
-    <p className='Lookingforward'>Looking forward to assisting you.</p>
-    <p>Have a lovely day,</p>
-    <p>Hanya Sherif</p>
-  </div>
-);
+const FormHeader = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <p className='form-header'>{t('formHeader')}</p>
+      <p className='Traveler'>{t('travelerGreeting')}</p>
+      <p>{t('introduction')}</p>
+      <p className='Lookingforward'>{t('lookingForward')}</p>
+      <p>{t('closing')}</p>
+      <p>{t('signature')}</p>
+    </div>
+  );
+};
 
-const FormFields = ({ onChange, formData }) => (
-  <div className="form-fields  ">
-    <div className="form-group">
-      <label htmlFor="firstName">First Name *</label>
-      <input type="text" id="firstName" value={formData.firstName} onChange={onChange} required />
+const FormFields = ({ onChange, formData }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="form-fields">
+      <div className="form-group">
+        <label htmlFor="firstName">{t('firstName')}</label>
+        <input type="text" id="firstName" value={formData.firstName} onChange={onChange} required />
+      </div>
+      <div className="form-group">
+        <label htmlFor="lastName">{t('lastName')}</label>
+        <input type="text" id="lastName" value={formData.lastName} onChange={onChange} required />
+      </div>
+      <div className="form-group">
+        <label htmlFor="country">{t('country')}</label>
+        <input type="text" id="country" placeholder={t('country')} value={formData.country} onChange={onChange} required />
+      </div>
+      <div className="form-group">
+        <label htmlFor="phone">{t('phone')}</label>
+        <input type="tel" id="phone" placeholder={t('phone')} value={formData.phone} onChange={onChange} required />
+      </div>
+      <div className="form-group">
+        <label htmlFor="email">{t('email')}</label>
+        <input type="email" id="email" value={formData.email} onChange={onChange} required />
+      </div>
+      <div className="form-group">
+        <label htmlFor="inquiry">{t('inquiry')}</label>
+        <textarea id="inquiry" value={formData.inquiry} onChange={onChange} required></textarea>
+      </div>
     </div>
-    <div className="form-group">
-      <label htmlFor="lastName">Last Name *</label>
-      <input type="text" id="lastName" value={formData.lastName} onChange={onChange} required />
-    </div>
-    <div className="form-group">
-      <label htmlFor="country">Country *</label>
-      <input type="text" id="country" placeholder="Country" value={formData.country} onChange={onChange} required />
-    </div>
-    <div className="form-group">
-      <label htmlFor="phone">Phone *</label>
-      <input type="tel" id="phone" placeholder="Phone" value={formData.phone} onChange={onChange} required />
-    </div>
-    <div className="form-group">
-      <label htmlFor="email">Email *</label>
-      <input type="email" id="email" value={formData.email} onChange={onChange} required />
-    </div>
-    <div className="form-group">
-      <label htmlFor="inquiry">Which trip are you inquiring about? </label>
-      <textarea id="inquiry" value={formData.inquiry} onChange={onChange} required></textarea>
-    </div>
-  </div>
-);
+  );
+};
 
-// SubmitButton component (unchanged)
-const SubmitButton = () => (
-  <button type="submit" className="submit-button">Send</button>
-);
+const SubmitButton = () => {
+  const { t } = useTranslation();
+  return (
+    <button type="submit" className="submit-button">{t('submitButton')}</button>
+  );
+};
 
 export default ContactUs;

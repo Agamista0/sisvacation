@@ -10,7 +10,7 @@ const Cart = () => {
   useEffect(() => {
     const fetchCartCount = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getProductsCountCart');
+        const response = await axios.get('https://slsvacation.com/api/getProductsCountCart');
         if (response.data.length > 0) {
           const productCount = response.data[0].product_count;
           setCartCount(productCount);

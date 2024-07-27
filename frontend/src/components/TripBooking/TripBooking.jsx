@@ -1,15 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './TripBooking.css';
 
 const TripBooking = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const tripTypes = [
-    'FRIENDS TRIP',
-    'HONEYMOON',
-    'SOLO TRAVELER',
-    'FAMILY TRIP',
-    'BUSINESS/ENTITY'
+    t('tripBooking.tripTypes.friends'),
+    t('tripBooking.tripTypes.honeymoon'),
+    t('tripBooking.tripTypes.solo'),
+    t('tripBooking.tripTypes.family'),
+    t('tripBooking.tripTypes.business')
   ];
 
   const handleTripTypeSelection = (type) => {
@@ -18,13 +20,13 @@ const TripBooking = () => {
 
   return (
     <div className="trip-booking">
-      <h3>WHO ARE YOU BOOKING THIS TRIP FOR ?</h3>
+      <h3>{t('tripBooking.title')}</h3>
       {tripTypes.map((type, index) => (
         <button key={index} className="trip-button" onClick={() => handleTripTypeSelection(type)}>
           {type}
         </button>
       ))}
-      <a href="/" className="back-link">BACK TO HOMEPAGE</a>
+      <a href="/" className="back-link">{t('tripBooking.backToHomepage')}</a>
     </div>
   );
 };

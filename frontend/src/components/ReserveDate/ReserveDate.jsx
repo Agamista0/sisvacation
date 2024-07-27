@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import './ReserveDate.css';
-const ParticipantSelector = ({ Person, setPerson}) => {
+
+const ParticipantSelector = ({ person, setPerson }) => {
+  const { t } = useTranslation();
   return (
     <div className="participant-selector" onClick={(e) => e.stopPropagation()}>
       <div className="participant-type">
-        <span>Persons</span>
+        <span>{t('persons')}</span>
         <div className="counter">
-          <button onClick={() => setPerson(Math.max(0, Person - 1))}>-</button>
-          <span>{Person}</span>
-          <button onClick={() => setPerson(Person + 1)}>+</button>
+          <button onClick={() => setPerson(Math.max(0, person - 1))}>-</button>
+          <span>{person}</span>
+          <button onClick={() => setPerson(person + 1)}>+</button>
         </div>
       </div>
       <div className="participant-type">
@@ -23,6 +26,7 @@ const ParticipantSelector = ({ Person, setPerson}) => {
 };
 
 const DatePicker = ({ selectedDate, setSelectedDate, closeDatePicker }) => {
+  const { t } = useTranslation();
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const months = [
@@ -83,7 +87,7 @@ const DatePicker = ({ selectedDate, setSelectedDate, closeDatePicker }) => {
           onChange={(e) => setCurrentMonth(new Date(currentMonth.getFullYear(), parseInt(e.target.value), 1))}
         >
           {months.map((month, index) => (
-            <option key={month} value={index}>{month}</option>
+            <option key={month} value={index}>{t('month', { month })}</option>
           ))}
         </select>
         <select 
@@ -91,20 +95,20 @@ const DatePicker = ({ selectedDate, setSelectedDate, closeDatePicker }) => {
           onChange={(e) => changeYear(parseInt(e.target.value))}
         >
           {Array.from({ length: 10 }, (_, i) => currentMonth.getFullYear() - 5 + i).map(year => (
-            <option key={year} value={year}>{year}</option>
+            <option key={year} value={year}>{t('year', { year })}</option>
           ))}
         </select>
         <button onClick={() => changeMonth(1)}>&gt;</button>
       </div>
       <div className="calendar">
         <div className="day-labels">
-          <span>Sun</span>
-          <span>Mon</span>
-          <span>Tue</span>
-          <span>Wed</span>
-          <span>Thu</span>
-          <span>Fri</span>
-          <span>Sat</span>
+          <span>{t('sun')}</span>
+          <span>{t('mon')}</span>
+          <span>{t('tue')}</span>
+          <span>{t('wed')}</span>
+          <span>{t('thu')}</span>
+          <span>{t('fri')}</span>
+          <span>{t('sat')}</span>
         </div>
         <div className="days">
           {renderCalendar()}
@@ -115,6 +119,7 @@ const DatePicker = ({ selectedDate, setSelectedDate, closeDatePicker }) => {
 };
 
 const ReserveDate = () => {
+  const { t } = useTranslation();
   const [person, setPerson] = useState(1);
   const [selectedDate, setSelectedDate] = useState('');
   const [showParticipants, setShowParticipants] = useState(false);
@@ -123,41 +128,41 @@ const ReserveDate = () => {
 
   const handleGetOffer = async () => {
     if (!selectedDate) {
-      alert('Please select a date');
+      alert(t('alertDateRequired'));
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/addToCart', {
+      const response = await axios.post('https://slsvacation.com/api/addToCart', {
         productId: offerId,
         quantity: person,
         date: selectedDate
       });
       
       if (response.status === 201 || response.status === 200) {
-        alert('Offer added to cart successfully!');
+        alert(t('alertOfferAdded'));
       }
     } catch (error) {
       console.error('Error adding offer to cart:', error);
-      alert('Failed to add offer to cart. Please try again.');
+      alert(t('alertOfferFailed'));
     }
   };
 
   return (
     <div className="ReserveDate">
-      <h3>Select participants and date</h3>
+      <h3>{t('selectParticipantsDate')}</h3>
       <div className="selector-container">
         <div className="dropdown" onClick={() => setShowParticipants(!showParticipants)}>
-          <span>Person x {person}</span>
+          <span>{t('personX', { count: person })}</span>
           {showParticipants && (
             <ParticipantSelector
-              Person={person}
+              person={person}
               setPerson={setPerson}
             />
           )}
         </div>
         <div className="dropdown" onClick={() => setShowDatePicker(!showDatePicker)}>
-          <span>{selectedDate || 'Select date'}</span>
+          <span>{selectedDate || t('selectDate')}</span>
           {showDatePicker && (
             <DatePicker 
               selectedDate={selectedDate} 
@@ -166,7 +171,9 @@ const ReserveDate = () => {
             />
           )}
         </div>
-        <button className="check-availability" onClick={handleGetOffer}>Get Offer</button>
+        <button className="check-availability" onClick={handleGetOffer}>
+          {t('getOffer')}
+        </button>
       </div>
     </div>
   );

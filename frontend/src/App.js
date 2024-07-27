@@ -10,6 +10,8 @@ import TripBookingPage from './pages/TripBooking';
 import CallRequests from './pages/ADMIN/CallRequests/CallRequests';
 import TripRequests from './pages/ADMIN/TripRequests/TripRequests';
 import Login from './pages/ADMIN/Login/Login';
+import AddOfferForm from './pages/ADMIN/AddOfferForm/AddOfferForm';
+import PrivateRoute from './pages/ADMIN/PrivateRoute';
 
 import OurOffers from './pages/OurOffers';
 import Offer from './pages/Offer';
@@ -17,20 +19,21 @@ import Wishlist from './pages/Wishlist';
 import TripFormPage from './pages/TripForm';
 import { UserContextProvider } from './contexts/userContext';
 import { Toaster } from 'react-hot-toast';
-
+import './i18n.js';
 import { Routes, Route } from 'react-router-dom';
-
 function App() {
+
   return (
     <>
-          <Toaster />
 
     <UserContextProvider>
-
+    <Toaster />
+  
     <Routes>
-    <Route path="/CallRequests" element={<CallRequests />} />
-    <Route path="/TripRequests" element={<TripRequests />} />
     <Route path="/Login" element={<Login />} />
+    <Route path="/CallRequests" element={<PrivateRoute element={CallRequests} />} />
+    <Route path="/TripRequests" element={<PrivateRoute element={TripRequests} />} />
+    <Route path="/AddOfferForm" element={<PrivateRoute element={AddOfferForm} />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/Payment" element={<Payment />} />

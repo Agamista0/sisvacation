@@ -11,7 +11,7 @@ function TripRequests() {
 
   const fetchTrips = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/getTrips');
+      const response = await axios.get('https://slsvacation.com/api/getTrips');
       setTrips(response.data);
     } catch (error) {
       console.error('Error fetching trips:', error);
@@ -21,7 +21,7 @@ function TripRequests() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this trip?')) {
       try {
-        await axios.delete(`http://localhost:5000/deleteTrip/${id}`);
+        await axios.delete(`https://slsvacation.com/api/deleteTrip/${id}`);
         setTrips(trips.filter(trip => trip.id !== id));
       } catch (error) {
         console.error('Error deleting trip:', error);

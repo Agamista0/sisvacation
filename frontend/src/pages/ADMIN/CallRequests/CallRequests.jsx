@@ -11,7 +11,7 @@ function CallRequests() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/getCallRequests');
+      const response = await axios.get('https://slsvacation.com/api/getCallRequests');
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -21,7 +21,7 @@ function CallRequests() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this call request?')) {
       try {
-        await axios.delete(`http://localhost:5000/deleteCallRequest/${id}`);
+        await axios.delete(`https://slsvacation.com/api/deleteCallRequest/${id}`);
         setUsers(users.filter(user => user.id !== id));
       } catch (error) {
         console.error('Error deleting call request:', error);

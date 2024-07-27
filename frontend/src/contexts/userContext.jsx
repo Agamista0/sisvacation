@@ -10,8 +10,10 @@ export const UserContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (!user) {
-            axios.get('http://localhost:5000/profile').then(({ data }) => {
+            axios.get('https://slsvacation.com/api/profile').then(({ data }) => {
                 setUser(data);
+            }).catch(err => {
+                console.error('Error fetching profile:', err);
             });
         }
     }, []);

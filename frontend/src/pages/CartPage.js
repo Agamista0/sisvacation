@@ -8,7 +8,8 @@ const CartPage = () => {
     <>    <PayPalScriptProvider options={{ "client-id": "AdH5vmUafgFMOVW4F7HLyQdjmbknbz14x2JBINrZjlHIyIRkSganen0gj5vkxLYsMMTiI9BBMm12rM-i", currency: "USD" }}>
 
     <Navbar />
-      <UserCart />    </PayPalScriptProvider>
+      <UserCart />    
+      </PayPalScriptProvider>
 
     </>
   )
